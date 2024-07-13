@@ -406,3 +406,45 @@ char* intal_fibonacci(unsigned int n){
     free(prev_2);
     return res;
 }
+// 9.. factorial function: fuction of factorial of unsigend integer n
+char* intal_factorail(unsigned int n){
+    if(n==0 || n==1){
+        char *res = (char*)malloc(sizeof(char)*2);
+        res[0]='1';
+        res[1]='\0';
+        return res;
+    }
+    int i = 2;
+    char *t1, *t2, *res, *add_one, *next_num;
+
+   
+    add_one = (char*)malloc(sizeof(char)*2);
+    add_one[0] = '1';
+    add_one[1] = '\0';
+
+    next_num = (char*)malloc(sizeof(char)*2);
+    next_num[0] = '1';
+    next_num[1] = '\0';
+
+    res = (char*)malloc(sizeof(char)*2);
+    res[0] = '1';
+    res[1] = '\0';
+
+    while(i<=n){
+        t1 = intal_add(next_num,add_one);
+        t2 = next_num;
+        next_num = t1;
+        free(t2);
+        t1 = intal_multiply(res,next_num);
+        t2 = res;
+        res = t1;
+        free(t2); 
+        i+=1;
+    }
+
+    free(add_one);
+    free(next_num);
+
+    return res;
+
+}
