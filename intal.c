@@ -448,3 +448,167 @@ char* intal_factorail(unsigned int n){
     return res;
 
 }
+// 10. INTAL_BINCOEFF: FUnction to compute the binary coefficeint of C(n,k)
+char* intal_bincoeff(unsigned int n,unsigned int k){
+    if(k> n/2)
+        k= n-k;
+    char** arr = (char**)malloc(sizeof(char*)*(k+1));
+    for(int i =0;i<=k;i++){
+        arr[i]=(char*)malloc(sizeof(char*)*MAX_SIZE);
+        strcpy(arr[i],"0");
+    }
+    strcpy(arr[0],"1");
+    char *t,*res;
+    for(int i=1;i<=n;i++){
+        for(int j = getmin(i,k);j>0;j--){
+            t = intal_add(arr[j],arr[j-1]);
+            strcpy(arr[j],t);
+            free(t);
+        }
+    }
+
+    res = strdup(arr[k]);
+    for(int i =0;i<=k;i++){
+        free(arr[i]);
+    }
+    free(arr);
+    return res;
+}
+
+static int getmin(unsigned int a,unsigned int b){
+    return (a>=b) ? a :b;
+}
+
+//11. INTAL_MAX:  Function to find max intal from array of intal & return the index pf max intal
+int intal_max(char** arr,int n){
+    int max_index= 0,cmp;
+    char* max_intal,*t;
+    max_intal = (char*)malloc(sizeof(char)*MAX_SIZE);
+    strcpy(max_intal,arr[0]);
+
+    for (int i = 1; i < n; i++){
+        t = arr[i];
+        cmp = intal_compare(t,max_intal);
+        if(cmp==1){
+            strcpy(max_intal,t);
+            max_index = i;
+        }
+    }
+    free(t);
+    free(max_intal);
+    return max_index;
+}
+
+//12. INTAL_MIN: Function to find min INTAL from given array of INTAL and return the min_index
+
+int intal_min(char** arr,int n){
+    int min_index = 0,cmp;
+    char *min_intal,*t;
+
+    min_intal = (char*)malloc(sizeof(char)*MAX_SIZE);
+    strcpy(min_intal,arr[0]);
+    for(int i =1;i<n;i++){
+        t = arr[i];
+        cmp = intal_compare(t,min_intal);
+        if(cmp==-1){
+            strcpy(min_intal,t);
+            min_index = i;
+        }
+    }
+    free(t);
+    free(min_intal);
+    return min_index;
+}
+
+//13. INTAL_SEARCH: A linear search to find the number from array of intal
+int intal_search(char** arr,int n, const char* key){
+    int res =-1,cmp;
+    char* t;
+    for(int i=0;i<n;i++){
+        t = arr[i];
+        cmp = intal_compare(t,key);
+        if(cmp==0){
+            res = i;
+            free(t);
+            break;
+        }
+    }
+    return res;
+}
+
+static void mergeSort(char **arr,int n){
+    if(n<=1)
+        return;
+    
+    int m= n/2;
+    mergeSort(arr,m);
+    mergeSort(arr+m,n-m);
+    merge(arr,n,m);
+}
+
+static void merge(char ** arr,int n,int m){
+    int i=0,j=m,k=0;
+
+    char **t;
+    t = (char**)malloc(sizeof(char*)*n);
+    for(int i = 0;i<n;i++){
+        t[i]=(char*)malloc(sizeof(char)*MAX_SIZE);
+        strcpy(t[i],"0");
+    }
+
+    while (i<m && j<n){
+        if(intal_compare(arr[i],arr[j])!=1){
+            strcpy(t[k],arr[i]);
+            i++;
+        }
+        else{
+            strcpy(t[k],arr[j]);
+            j++;
+        }
+        k++;
+    }
+
+    if(j==n){
+        while (i<m)
+        {
+            strcpy(t[k++],arr[i++]);
+        }
+    }
+    else{
+        while(j<n){
+            strcpy(t[k++],arr[j++]);
+        }
+    }
+
+    for(int i=0;i<n;i++){
+        strcpy(arr[i],t[i]);
+        free(t[i]);
+    }
+    free(t);
+    
+}
+
+//15. INTAL_BINSEARCH
+int intal_binsearch(char** arr,int n,const char* key){
+    char *k = (char*)malloc(sizeof(char)*MAX_SIZE);
+    strcpy(k,key);
+    int res;
+    res = custom_binSearch(arr,0,n,k);
+    free(k);
+    return res;
+}
+
+static int custom_binSearch(char **arr,int l,int r,char* key){
+    if(r-l<0)
+        return -1;
+    
+    int m = (l+r)/2;
+
+    if(intal_compare(key,arr[m])==0)
+        return m;
+    else if(intal_compare(key,arr[m])==-1)
+        return custom_binSearch(arr,l,m-1,key);
+    else
+        return custom_binSearch(arr,m+1,r,key);
+}
+
