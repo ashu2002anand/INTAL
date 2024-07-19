@@ -1,0 +1,1 @@
+{"name":"Local: puzzle","url":"c:\\Users\\ashuq\\OneDrive\\Desktop\\INTAL_project\\INTAL\\puzzle.cpp","tests":[{"id":1721398122673,"input":"4 2\n3 1 8 7\n4 4 6 2","output":"9"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ashuq\\OneDrive\\Desktop\\INTAL_project\\INTAL\\puzzle.cpp","group":"local","local":true}

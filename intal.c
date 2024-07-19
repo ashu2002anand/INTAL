@@ -611,4 +611,47 @@ static int custom_binSearch(char **arr,int l,int r,char* key){
     else
         return custom_binSearch(arr,m+1,r,key);
 }
+// 16. COIN_ROW_PROBLEM: Returns the max sum that can be obtained from the array
+char* coin_row_problem(char **arr,int n){
+    char **dp_table = (char**)malloc(sizeof(char*)*n);
 
+    for(int i=0;i<n;i++){
+        dp_table[i]= (char*)malloc(sizeof(char)*MAX_SIZE);
+        strcpy(dp_table[i],"0");
+    }
+    char *res = (char*)malloc(sizeof(char)*MAX_SIZE);
+    strcpy(res,find_max(arr,dp_table,n-1));
+
+    for(int i=0;i<n;i++){
+        free(dp_table[i]);
+    }
+    free(dp_table);
+
+    return res;
+}
+
+static char* find_max(char **arr,char **dp_table,int n){
+    if(n<0)
+        return "0";
+    else if(n==0){
+        strcpy(dp_table[0],arr[0]);
+        return dp_table[0];
+    }
+
+    char *t1,*add_curr_coin,*use_prev_max;
+
+    t1 = find_max(arr,dp_table,n-2);
+    add_curr_coin = intal_add(t1,arr[n]);
+
+    use_prev_max = find_max(arr,dp_table,n-1);
+
+    int r = intal_compare(add_curr_coin,use_prev_max);
+    if(r>=0)
+        strcpy(dp_table[n],add_curr_coin);
+    else
+        strcpy(dp_table[n],use_prev_max);
+
+    free(add_curr_coin);
+
+    return dp_table[n];
+}
