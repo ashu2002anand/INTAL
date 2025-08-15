@@ -1,20 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
 #include "intal.h"
-
-//assuming the max intial length to be 1000 (+1 is for null chracter)
-#define MAX_SIZE 1001
-
-//Helper function to perform arithematic operations
-static char* padding(const char* intalTemp,int zeros,int new_length);
-static char* stripZeros(const char* intalTemp);
-static char* compute_gcd(char* n1,char* n2);
-static int getmin(unsigned int a,unsigned int b);
-static void merge(char **arr,int n,int m);
-static void mergeSort(char **arr,int n);
-static int custom_binSearch(char ** arr,int l,int r,char *key);
-static char* find_max(char **arr,char **dp_table,int n);
 
 //padding with prefix zeros to change the length of given character array function description
 static char* padding(const char* intalTemp,int zeros,int new_length){
@@ -406,8 +390,9 @@ char* intal_fibonacci(unsigned int n){
     free(prev_2);
     return res;
 }
+
 // 9.. factorial function: fuction of factorial of unsigend integer n
-char* intal_factorail(unsigned int n){
+char* intal_factorial(unsigned int n){
     if(n==0 || n==1){
         char *res = (char*)malloc(sizeof(char)*2);
         res[0]='1';
